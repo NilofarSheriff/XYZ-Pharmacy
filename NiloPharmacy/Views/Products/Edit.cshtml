@@ -1,0 +1,102 @@
+﻿@using xyzpharmacy.Data.Enums
+@using XYZPharmacy.Data.ViewModels
+@model ProductsViewModel
+
+@{
+    ViewData["Title"] = "Update Products";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Update Products</h4>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="ProductName" class="control-label"></label>
+                                <input asp-for="ProductName" class="form-control" />
+                                <span asp-validation-for="ProductName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ExpiryDate" class="control-label"></label>
+                                <input asp-for="ExpiryDate" type="date" class="form-control" />
+                                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ProductPrice" class="control-label"></label>
+                                <input asp-for="ProductPrice" type="number" class="form-control" />
+                                <span asp-validation-for="ProductPrice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProductImage" class="control-label"></label>
+                                <div class="custom-file">
+                                    <input asp-for="ProductImage" type="file" class="custom-file-input" id="customFile">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="ProductImage" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="SupplierId" class="control-label"></label>
+                                <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.Suppliers"></select>
+                                <span asp-validation-for="SupplierId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CategoryName" class="control-label"></label>
+                                <select asp-for="CategoryName" class="form-control" asp-items="Html.GetEnumSelectList<Category>()"></select>
+                                <span asp-validation-for="CategoryName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Stock" class="control-label"></label>
+                                <input asp-for="Stock" type="number" min="1" max="800" class="form-control" />
+                                <span asp-validation-for="Stock" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MedicinalUse" class="control-label"></label>
+                                <select asp-for="MedicinalUse" class="form-control" asp-items="Html.GetEnumSelectList<MedicinalUse>()"></select>
+                                <span asp-validation-for="MedicinalUse" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="MedicineDesc" class="control-label"></label>
+                                <textarea asp-for="MedicineDesc" class="form-control"></textarea>
+                                <span asp-validation-for="MedicineDesc" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 offset-4 text-center">
+                        <img width="100%" id="ImageUrlPreview" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show all</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}  

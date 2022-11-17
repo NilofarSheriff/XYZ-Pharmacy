@@ -1,0 +1,76 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Medicine details";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.ProductName
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Url.Content(Model.ProductImage)" width="100%" alt="@Model.ProductName">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.MedicineDesc</p>
+                        <p class="card-text">
+                        </p>
+                        <p class="card-text">
+                            <b>Supplier: </b>
+                            <a asp-controller="Supplier" asp-action="Details" asp-route-id="@Model.SupplierId">
+                                @Model.SupplierId
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.CategoryName</p>
+                        <p class="card-text"><b>Expiry Date: </b>@Model.ExpiryDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>InStock: </b>@Model.Stock</p>
+                        
+
+                        <p class="card-text ">
+                            <b>Status: </b>
+                            @if ((0 < Model.Stock) && (DateTime.Now < Model.ExpiryDate))
+                            {
+                                    <span class="badge bg-success text-white">AVAILABLE</span>
+                            }
+                            else
+                            {
+                                    <span class="badge bg-danger text-white">No Stock</span>
+                            }
+                            @*else if (DateTime.Now > Model.EndDate)
+                            {
+                                <span class="badge bg-danger text-white">EXPIRED</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary text-white">UPCOMING</span>
+                            }*@
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <p class="card-text">
+                            <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                Back to List
+                            </a>
+                            <a class="btn btn-success text-white  @((0 < Model.Stock)&&(DateTime.Now<Model.ExpiryDate) ? "" : "disabled")"
+                               asp-controller="Orders"
+                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.ProductId"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.ProductPrice.ToString("c"))</a>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

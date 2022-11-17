@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  nilopharmacy:
+    image: ${DOCKER_REGISTRY-}nilopharmacy
+    build:
+      context: .
+      dockerfile: NiloPharmacy/Dockerfile
+
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+

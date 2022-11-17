@@ -1,0 +1,61 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = "Delete Confirmation";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="card mb-12">
+            <div class="row g-0">
+                <div class="col-md-12">
+                    <div class="card-header text-white bg-info">
+                        <p class="card-text">
+                            <h5 class="card-title">
+                                @Model.ProductName
+                            </h5>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="@Url.Content(Model.ProductImage)" width="100%" alt="@Model.ProductName">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text">@Model.MedicineDesc</p>
+                        <p class="card-text">
+                        </p>
+                        <p class="card-text">
+                            <b>Supplier: </b>
+                            <a asp-controller="Supplier" asp-action="Index" asp-route-id="@Model.SupplierId">
+                                @Model.SupplierId
+                            </a>
+                        </p>
+                        <p class="card-text"><b>Category: </b>@Model.CategoryName</p>
+                        <p class="card-text"><b>Expiry Date: </b>@Model.ExpiryDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>InStock: </b>@Model.Stock</p>
+                        
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <form asp-action="Delete">
+                                <input type="hidden" asp-for="ProductId" />
+                                <input type="submit" value="Confirm" class="btn btn-danger float-right" />
+                            </form>
+                            <br />
+
+
+                            <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                            <a class="btn btn-outline-success float-Right" asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

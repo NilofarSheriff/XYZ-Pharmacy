@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Product>
+<br />
+
+@ViewData["Welcome"]
+<br />
+@ViewBag.Description
+
+@{
+    ViewData["Title"] = "List of Products";
+
+}
+
+<div class="row">
+    @foreach(var item in Model){
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.ProductName
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.ProductId"><i class="bi bi-pencil-square"></i></a>
+                                        <a class="text-white float-right" asp-action="Delete" asp-route-id="@item.ProductId"><i class="bi bi-trash"></i></a>
+
+                                    }
+                                    
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="@Url.Content(item.ProductImage)" width="100%" alt="@item.ProductName">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.MedicineDesc</p>
+                            <p class="card-text"><b>Category: </b>@item.CategoryName</p>
+                            <p class="card-text"><b>Medicinal Use: </b>@item.MedicinalUse</p>
+                            <p class="card-text"><b>Expiry Date: </b>@item.ExpiryDate.ToString("dd MMM yy")</p>
+                             <p class="card-text"><b>SupplierId: </b>@item.SupplierId</p>
+                            <p class="card-text"><b>InStock: </b>@item.Stock</p>
+                            @*<p class="card-text"><b>Quantity: </b><input type="number" name="@item.Quantity" value="1" id="qty" min="1" max="50" /></p>
+                            *@
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                @if ((0 < item.Stock)&&(DateTime.Now<item.ExpiryDate))
+                                {
+                                    <span class="badge bg-success text-white">AVAILABLE</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger text-white">No Stock</span>
+                                }
+                               
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.ProductId">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>
+                                <a class="btn btn-success text-white  @((0 < item.Stock)&&(DateTime.Now<item.ExpiryDate) ? "" : "disabled")"
+                               asp-controller="Orders"
+                               asp-action="AddItemToShoppingCart" asp-route-id="@item.ProductId"><i class="bi bi-cart-plus"></i> Add to Cart (Price @item.ProductPrice.ToString("c"))</a>
+                                
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@await Html.PartialAsync("_CreateItem", "Products")
+
+

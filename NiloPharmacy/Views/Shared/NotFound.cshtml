@@ -1,0 +1,11 @@
+﻿<div class="row">
+    <div class="col-md-6 offset-3">
+        @if(ViewBag.Message==null){
+            <h1 class="text-info">You've reached the end of the internet</h1>
+            <hr />
+            <a class="btn btn-outline-success" asp-controller="Products" asp-action="Index">Home Page</a>
+        }
+        <h1 class="text-info">@ViewBag.Message</h1>
+        
+    </div>
+</div>

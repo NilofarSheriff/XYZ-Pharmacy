@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/rllxyzpharmacy/databases/XYZPharmacy_RLL",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:Con",
+      "dynamicId": null
+    }
+  }
+}

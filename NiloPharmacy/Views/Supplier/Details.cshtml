@@ -1,0 +1,59 @@
+﻿@model Supplier
+@{
+    ViewData["Title"] = "Details of "+@Model.SupplierName;
+}
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Details of the Supplier</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create">
+                    
+                    <div class="form-group">
+                        <label asp-for="SupplierId" class="control-label"></label>
+                        <input asp-for="SupplierId" class="form-control" readonly/>
+                        <span asp-validation-for="SupplierId" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="SupplierName" class="control-label"></label>
+                        <input asp-for="SupplierName" class="form-control" readonly />
+                        <span asp-validation-for="SupplierName" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="SupplierAddress" class="control-label"></label>
+                        <input asp-for="SupplierAddress" class="form-control" readonly />
+                        <span asp-validation-for="SupplierAddress" class="text-danger"></span>
+                    </div>
+                    @* <br />
+                    <div class="form-group">
+                    <label asp-for="Products" class="control-label"></label>
+                    <input asp-for="Products" class="form-control" />
+                    <span asp-validation-for="Products" class="text-danger"></span>
+                    </div>*@
+
+                    <div>
+                        <br />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create New" class="btn btn-outline-success float-right" />
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-outline-success float-Right" asp-action="Edit" asp-route-id="@Model.SupplierId">Edit</a>
+                            <a class="btn btn-outline-danger float-Right" asp-action="Delete" asp-route-id="@Model.SupplierId">Delete</a>
+                        }
+                        
+                        <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

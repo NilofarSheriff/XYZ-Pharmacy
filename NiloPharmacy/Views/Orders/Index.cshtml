@@ -1,0 +1,94 @@
+﻿@model List<Order>
+@inject UserManager<ApplicationUser> UserManager;
+
+@{
+    ViewData["Title"] = "All orders";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>List of all your orders</h4>
+        </p>
+        <div>
+
+            <table class="table" id="ordertable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Payment Status</th>
+                        
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                        <td class="align-middle">@UserManager.GetUserName(User)</td>
+                        <td class="align-middle">Cash on Delivery</td>
+                         
+                        </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+
+        <table class="table" id="ordertable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    @*<th>Total</th>*@
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <th>User</th>
+                    }
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td class="align-middle">@order.Id</td>
+                        <td class="align-middle">
+                            <ul style="list-style-type:none">
+                                @foreach (var item in order.OrderItems)
+                                {
+                                    <li>
+                                        <div class="alert alert-info" role="alert">
+                                            <span class="badge bg-success">@item.Amount</span> [@item.Price.ToString("c")] - @item.product.ProductName
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                        @*<td class="align-middle">
+                            @ViewBag.Price
+     
+
+                            @order.OrderItems.Select(m => m.product.ProductPrice * m.Amount).Sum().ToString("c")
+                        </td>*@
+                       
+
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <td class="align-middle"> @order.User.FullName </td>
+                        }
+                        <td>
+                            <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@order.Id"><i class="bi bi-trash"></i>Cancel Order</a>
+                        </td>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <form>
+            <input type="button" class="btn btn-outline-info" value="Print Order" onClick="window.print()">
+        </form>
+       
+           
+
+    </div>
+</div>
+
